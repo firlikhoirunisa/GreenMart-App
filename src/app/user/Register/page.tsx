@@ -1,13 +1,16 @@
+"use client";
+import { redirect } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 
-const GreenMartLogin = () => {
+const GreenMartRegister = () => {
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [loginError, setLoginError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [windowWidth, setWindowWidth] = useState(1200); // Default width
 
   useEffect(() => {
@@ -33,23 +36,27 @@ const GreenMartLogin = () => {
       ...prev,
       [name]: value
     }));
-    
-    // Clear error when user types
-    if (loginError) {
-      setLoginError('');
+
+    // Real-time password confirmation validation
+    if (name === 'confirmPassword') {
+      if (value && value !== formData.password) {
+        setPasswordError('Password tidak cocok!');
+      } else {
+        setPasswordError('');
+      }
     }
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     
-    if (!formData.email || !formData.password) {
-      setLoginError('Email dan password harus diisi!');
+    if (formData.password !== formData.confirmPassword) {
+      alert('Password tidak cocok!');
       return;
     }
     
     if (formData.password.length < 6) {
-      setLoginError('Password minimal 6 karakter!');
+      alert('Password minimal 6 karakter!');
       return;
     }
     
@@ -57,28 +64,16 @@ const GreenMartLogin = () => {
     
     // Simulate API call
     setTimeout(() => {
-      // Check if user exists in localStorage (simulation)
+      setShowModal(true);
+      
+      // Store user data (simulation) - only if localStorage is available
       if (typeof window !== 'undefined' && window.localStorage) {
-        const storedUser = localStorage.getItem('greenmart-user');
-        if (storedUser) {
-          const userData = JSON.parse(storedUser);
-          if (userData.email === formData.email) {
-            // Login successful
-            setShowModal(true);
-            localStorage.setItem('greenmart-login', JSON.stringify({
-              email: formData.email,
-              loggedIn: true,
-              loginTime: new Date().toISOString()
-            }));
-          } else {
-            setLoginError('Email atau password salah!');
-          }
-        } else {
-          setLoginError('Akun tidak ditemukan. Silakan daftar terlebih dahulu!');
-        }
-      } else {
-        // Fallback for demo - always success
-        setShowModal(true);
+        const userData = {
+          email: formData.email,
+          registered: true,
+          registeredAt: new Date().toISOString()
+        };
+        localStorage.setItem('greenmart-user', JSON.stringify(userData));
       }
       
       setIsLoading(false);
@@ -89,17 +84,14 @@ const GreenMartLogin = () => {
     setShowModal(false);
     setFormData({
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: ''
     });
-    setLoginError('');
+    setPasswordError('');
   };
 
-  const showRegister = () => {
-    alert('Halaman register akan dibuka!');
-  };
-
-  const forgotPassword = () => {
-    alert('Fitur lupa password akan segera hadir!');
+  const showLogin = () => {
+    redirect("Login")
   };
 
   const styles = {
@@ -123,7 +115,7 @@ const GreenMartLogin = () => {
       padding: '3rem'
     },
     heroImage: {
-      maxWidth: '200rem',
+      maxWidth: '290rem',
       width: '100%',
       height: '35rem',
       borderRadius: '1rem',
@@ -132,9 +124,29 @@ const GreenMartLogin = () => {
       display: 'flex',
       alignItems: 'end',
       justifyContent: 'center',
-      backgroundImage: 'url("/Image/vegetables-basket.jpg")',
+      backgroundImage: 'url("/Image/vegetables-basket.jpg")', // Path relatif dari folder public
       backgroundSize: 'cover',
       backgroundPosition: 'center'
+    },
+    heroOverlay: {
+      background: 'linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.4))',
+      color: 'white',
+      padding: '1.5rem',
+      borderRadius: '0 0 1rem 1rem',
+      textAlign: 'center' as const,
+      width: '100%',
+      position: 'absolute' as const,
+      bottom: 0,
+      left: 0
+    },
+    heroTitle: {
+      fontWeight: 600,
+      marginBottom: '0.5rem',
+      fontSize: '1.5rem'
+    },
+    heroSubtitle: {
+      fontSize: '0.875rem',
+      opacity: 0.9
     },
     rightSide: {
       flex: 1,
@@ -198,9 +210,6 @@ const GreenMartLogin = () => {
       outline: 'none',
       boxSizing: 'border-box' as const
     },
-    formInputError: {
-      borderColor: '#EF4444'
-    },
     submitBtn: {
       width: '100%',
       backgroundColor: '#22C55E',
@@ -218,23 +227,13 @@ const GreenMartLogin = () => {
       opacity: 0.5,
       cursor: 'not-allowed'
     },
-    forgotPassword: {
-      textAlign: 'center' as const,
-      marginTop: '1rem'
-    },
-    forgotPasswordLink: {
-      color: '#22C55E',
-      textDecoration: 'none',
-      fontSize: '0.875rem',
-      cursor: 'pointer'
-    },
-    registerLink: {
+    loginLink: {
       textAlign: 'center' as const,
       marginTop: '1.5rem',
       fontSize: '0.875rem',
       color: '#6B7280'
     },
-    registerLinkA: {
+    loginLinkA: {
       color: '#22C55E',
       textDecoration: 'none',
       fontWeight: 500,
@@ -288,8 +287,7 @@ const GreenMartLogin = () => {
     errorText: {
       color: '#EF4444',
       fontSize: '0.875rem',
-      marginTop: '0.25rem',
-      textAlign: 'center' as const
+      marginTop: '0.25rem'
     }
   };
 
@@ -304,12 +302,12 @@ const GreenMartLogin = () => {
         {isDesktop && (
           <div style={styles.leftSide}>
             <div style={styles.heroImage}>
-              {/* Clean image without overlay */}
+              {/* Text overlay dihapus */}
             </div>
           </div>
         )}
 
-        {/* Right Side - Login Form */}
+        {/* Right Side - Registration Form */}
         <div style={{
           ...styles.rightSide,
           ...(isMobile ? { padding: '1rem' } : {})
@@ -326,22 +324,17 @@ const GreenMartLogin = () => {
               </h1>
             </div>
 
-            {/* Login Card */}
+            {/* Registration Card */}
             <div style={{
               ...styles.formCard,
               ...(isMobile ? { padding: '1.5rem' } : {})
             }}>
               <div style={styles.formHeader}>
-                <h2 style={styles.formTitle}>Masuk</h2>
+                <h2 style={styles.formTitle}>Daftar</h2>
                 <p style={styles.formSubtitle}>
                   Silahkan masukkan Email dan Password Anda
                 </p>
               </div>
-
-              {/* Error Message */}
-              {loginError && (
-                <div style={styles.errorText}>{loginError}</div>
-              )}
 
               <div>
                 {/* Email Input */}
@@ -351,14 +344,11 @@ const GreenMartLogin = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    style={{
-                      ...styles.formInput,
-                      ...(loginError ? styles.formInputError : {})
-                    }}
+                    style={styles.formInput}
                     placeholder="Masukkan Email"
                     required
                     onFocus={(e) => e.target.style.borderColor = '#22C55E'}
-                    onBlur={(e) => e.target.style.borderColor = loginError ? '#EF4444' : '#E5E7EB'}
+                    onBlur={(e) => e.target.style.borderColor = '#E5E7EB'}
                   />
                 </div>
 
@@ -369,27 +359,38 @@ const GreenMartLogin = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    style={{
-                      ...styles.formInput,
-                      ...(loginError ? styles.formInputError : {})
-                    }}
+                    style={styles.formInput}
                     placeholder="Masukkan Password"
                     required
                     onFocus={(e) => e.target.style.borderColor = '#22C55E'}
-                    onBlur={(e) => e.target.style.borderColor = loginError ? '#EF4444' : '#E5E7EB'}
+                    onBlur={(e) => e.target.style.borderColor = '#E5E7EB'}
                   />
                 </div>
 
-                {/* Forgot Password Link */}
-                <div style={styles.forgotPassword}>
-                  <span
-                    onClick={forgotPassword}
-                    style={styles.forgotPasswordLink}
-                    onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
-                    onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
-                  >
-                    Lupa Password?
-                  </span>
+                {/* Confirm Password Input */}
+                <div style={styles.formGroup}>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    style={{
+                      ...styles.formInput,
+                      borderColor: passwordError ? '#EF4444' : 
+                                 formData.confirmPassword && !passwordError ? '#22C55E' : '#E5E7EB'
+                    }}
+                    placeholder="Konfirmasi Password"
+                    required
+                    onFocus={(e) => {
+                      if (!passwordError) e.target.style.borderColor = '#22C55E';
+                    }}
+                    onBlur={(e) => {
+                      if (!passwordError) e.target.style.borderColor = '#E5E7EB';
+                    }}
+                  />
+                  {passwordError && (
+                    <div style={styles.errorText}>{passwordError}</div>
+                  )}
                 </div>
 
                 {/* Submit Button */}
@@ -407,20 +408,20 @@ const GreenMartLogin = () => {
                     if (!isLoading) e.currentTarget.style.backgroundColor = '#22C55E';
                   }}
                 >
-                  {isLoading ? 'Memproses...' : 'Masuk'}
+                  {isLoading ? 'Memproses...' : 'Daftar'}
                 </button>
               </div>
 
-              {/* Register Link */}
-              <div style={styles.registerLink}>
-                Belum Punya Akun?{' '}
+              {/* Login Link */}
+              <div style={styles.loginLink}>
+                Sudah Punya Akun?{' '}
                 <span
-                  onClick={showRegister}
-                  style={styles.registerLinkA}
+                  onClick={showLogin}
+                  style={styles.loginLinkA}
                   onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
                   onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
                 >
-                  Daftar
+                  Masuk
                 </span>
               </div>
             </div>
@@ -432,10 +433,10 @@ const GreenMartLogin = () => {
       {showModal && (
         <div style={styles.modal}>
           <div style={styles.modalContent}>
-            <div style={styles.modalEmoji}>🎉</div>
-            <h3 style={styles.modalTitle}>Berhasil Masuk!</h3>
+            <div style={styles.modalEmoji}>✅</div>
+            <h3 style={styles.modalTitle}>Berhasil Daftar!</h3>
             <p style={styles.modalText}>
-              Selamat datang kembali di GreenMART!
+              Akun Anda telah berhasil dibuat.
             </p>
             <button
               onClick={closeModal}
@@ -452,4 +453,4 @@ const GreenMartLogin = () => {
   );
 };
 
-export default GreenMartLogin;
+export default GreenMartRegister;
