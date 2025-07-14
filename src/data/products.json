@@ -1,0 +1,51 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Bayam Segar",
+      "price": 5000,
+      "image": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300",
+      "rating": 4.5,
+      "category": "Sayuran Hijau",
+      "discount": 10,
+      "description": "Bayam segar organik langsung dari petani",
+      "stock": 50,
+      "store": {
+        "id": 1,
+        "name": "Toko Sayur Pak Budi",
+        "location": "Jakarta"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Tomat Merah",
+      "price": 8000,
+      "image": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=300",
+      "rating": 4.8,
+      "category": "Sayuran Buah",
+      "description": "Tomat merah segar berkualitas premium",
+      "stock": 30,
+      "store": {
+        "id": 1,
+        "name": "Toko Sayur Pak Budi",
+        "location": "Jakarta"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Wortel Baby",
+      "price": 6000,
+      "image": "https://images.unsplash.com/photo-1582515073490-39981397c445?w=300",
+      "rating": 4.3,
+      "category": "Umbi-umbian",
+      "discount": 15,
+      "description": "Wortel baby manis dan segar",
+      "stock": 40,
+      "store": {
+        "id": 2,
+        "name": "Tani Fresh",
+        "location": "Bandung"
+      }
+    }
+  ]
+}

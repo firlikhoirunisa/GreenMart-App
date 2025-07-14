@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "user@gmail.com",
+      "password": "password123",
+      "name": "John Doe",
+      "role": "user",
+      "phone": "081234567890",
+      "address": "Jl. Contoh No. 123, Jakarta"
+    }
+  ],
+  "stores": [
+    {
+      "id": 1,
+      "email": "store@gmail.com",
+      "password": "store123",
+      "name": "Toko Sayur Pak Budi",
+      "role": "store",
+      "phone": "081234567891",
+      "address": "Jl. Pasar No. 456, Jakarta"
+    }
+  ]
+}
