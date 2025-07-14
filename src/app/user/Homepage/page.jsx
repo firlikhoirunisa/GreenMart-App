@@ -1,4 +1,5 @@
 "use client";
+import { redirect } from 'next/navigation';
 import React, { useState } from 'react';
 
 const GreenMartHomepage = () => {
@@ -18,7 +19,7 @@ const GreenMartHomepage = () => {
   };
 
   const handleProductClick = (productName) => {
-    alert(`Navigasi ke detail produk: ${productName}`);
+    redirect("ProductDetail")
   };
 
   const handleCategoryClick = (categoryName) => {

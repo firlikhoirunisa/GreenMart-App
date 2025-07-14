@@ -1,4 +1,5 @@
 "use client";
+import { redirect } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 
 const GreenMartLogin = () => {
@@ -93,10 +94,11 @@ const GreenMartLogin = () => {
       password: ''
     });
     setLoginError('');
+    redirect("Homepage")
   };
 
   const showRegister = () => {
-    alert('Halaman register akan dibuka!');
+    redirect("Register")
   };
 
   const forgotPassword = () => {
@@ -379,18 +381,6 @@ const GreenMartLogin = () => {
                     onFocus={(e) => e.target.style.borderColor = '#22C55E'}
                     onBlur={(e) => e.target.style.borderColor = loginError ? '#EF4444' : '#E5E7EB'}
                   />
-                </div>
-
-                {/* Forgot Password Link */}
-                <div style={styles.forgotPassword}>
-                  <span
-                    onClick={forgotPassword}
-                    style={styles.forgotPasswordLink}
-                    onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
-                    onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
-                  >
-                    Lupa Password?
-                  </span>
                 </div>
 
                 {/* Submit Button */}

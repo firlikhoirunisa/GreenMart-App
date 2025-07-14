@@ -12,10 +12,17 @@ const GreenMartCheckout = () => {
     city: 'sleman',
     email: 'ayayudian@gmail.com',
     phone: '(+62) 8125729087',
-    shippingToOther: false,
     notes: '',
     paymentMethod: 'cod'
   });
+
+  // Province and city mapping
+  const locationData = {
+    'yogyakarta': ['Kota Yogyakarta', 'Sleman', 'Bantul', 'Kulon Progo', 'Gunungkidul'],
+    'jawa-tengah': ['Semarang', 'Surakarta', 'Magelang', 'Salatiga', 'Pekalongan', 'Tegal'],
+    'jawa-barat': ['Bandung', 'Bekasi', 'Depok', 'Bogor', 'Cirebon', 'Sukabumi'],
+    'jawa-timur': ['Surabaya', 'Malang', 'Batu', 'Blitar', 'Kediri', 'Madiun']
+  };
 
   // Sample order data
   const orderItems = [
@@ -47,22 +54,55 @@ const GreenMartCheckout = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    
+    if (name === 'province') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+        city: '' // Reset city when province changes
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }));
+    }
   };
 
   const handleSubmitOrder = (e) => {
     e.preventDefault();
     
     // Basic validation
-    if (!formData.firstName || !formData.lastName || !formData.address || !formData.email || !formData.phone) {
+    if (!formData.firstName || !formData.lastName || !formData.address || !formData.email || !formData.phone || !formData.province || !formData.city) {
       alert('Mohon lengkapi semua field yang wajib diisi!');
       return;
     }
     
-    alert('Pesanan berhasil ditempatkan!');
+    // Create order summary data
+    const orderSummary = {
+      items: orderItems,
+      customerInfo: formData,
+      subtotal,
+      shipping,
+      total,
+      paymentMethod: formData.paymentMethod
+    };
+    
+    // Store order data in sessionStorage for the next page
+    sessionStorage.setItem('orderData', JSON.stringify(orderSummary));
+    
+    // Redirect to OrderDetail page
+    window.location.href = '/OrderDetail';
+  };
+
+  const getProvinceName = (provinceCode) => {
+    const provinceMap = {
+      'yogyakarta': 'D.I. Yogyakarta',
+      'jawa-tengah': 'Jawa Tengah',
+      'jawa-barat': 'Jawa Barat',
+      'jawa-timur': 'Jawa Timur'
+    };
+    return provinceMap[provinceCode] || provinceCode;
   };
 
   const goBack = () => {
@@ -252,22 +292,6 @@ const GreenMartCheckout = () => {
       resize: 'vertical',
       fontFamily: 'inherit'
     },
-    checkbox: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.5rem',
-      marginBottom: '1.5rem'
-    },
-    checkboxInput: {
-      width: '1rem',
-      height: '1rem',
-      cursor: 'pointer'
-    },
-    checkboxLabel: {
-      fontSize: '0.875rem',
-      color: '#374151',
-      cursor: 'pointer'
-    },
     orderSummary: {
       backgroundColor: 'white',
       borderRadius: '1rem',
@@ -452,7 +476,7 @@ const GreenMartCheckout = () => {
               {/* Name Fields */}
               <div style={styles.formRow}>
                 <div>
-                  <label style={styles.label}>Nama depan</label>
+                  <label style={styles.label}>Nama depan *</label>
                   <input
                     type="text"
                     name="firstName"
@@ -464,7 +488,7 @@ const GreenMartCheckout = () => {
                   />
                 </div>
                 <div>
-                  <label style={styles.label}>Nama belakang</label>
+                  <label style={styles.label}>Nama belakang *</label>
                   <input
                     type="text"
                     name="lastName"
@@ -479,7 +503,7 @@ const GreenMartCheckout = () => {
 
               {/* Address */}
               <div style={styles.formGroup}>
-                <label style={styles.label}>Alamat</label>
+                <label style={styles.label}>Alamat *</label>
                 <input
                   type="text"
                   name="address"
@@ -494,7 +518,7 @@ const GreenMartCheckout = () => {
               {/* Province and City */}
               <div style={styles.formRow}>
                 <div>
-                  <label style={styles.label}>Provinsi</label>
+                  <label style={styles.label}>Provinsi *</label>
                   <select
                     name="province"
                     value={formData.province}
@@ -511,7 +535,7 @@ const GreenMartCheckout = () => {
                   </select>
                 </div>
                 <div>
-                  <label style={styles.label}>Kabupaten/Kota</label>
+                  <label style={styles.label}>Kabupaten/Kota *</label>
                   <select
                     name="city"
                     value={formData.city}
@@ -519,12 +543,14 @@ const GreenMartCheckout = () => {
                     style={styles.select}
                     onFocus={(e) => e.target.style.borderColor = '#22C55E'}
                     onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
+                    disabled={!formData.province}
                   >
                     <option value="">Pilih Kota</option>
-                    <option value="sleman">Sleman</option>
-                    <option value="yogyakarta">Yogyakarta</option>
-                    <option value="bantul">Bantul</option>
-                    <option value="kulon-progo">Kulon Progo</option>
+                    {formData.province && locationData[formData.province] && 
+                      locationData[formData.province].map((city) => (
+                        <option key={city} value={city.toLowerCase().replace(/\s+/g, '-')}>{city}</option>
+                      ))
+                    }
                   </select>
                 </div>
               </div>
@@ -532,7 +558,7 @@ const GreenMartCheckout = () => {
               {/* Email and Phone */}
               <div style={styles.formRow}>
                 <div>
-                  <label style={styles.label}>Email</label>
+                  <label style={styles.label}>Email *</label>
                   <input
                     type="email"
                     name="email"
@@ -544,7 +570,7 @@ const GreenMartCheckout = () => {
                   />
                 </div>
                 <div>
-                  <label style={styles.label}>Nomor telepon</label>
+                  <label style={styles.label}>Nomor telepon *</label>
                   <input
                     type="tel"
                     name="phone"
@@ -555,21 +581,6 @@ const GreenMartCheckout = () => {
                     onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
                   />
                 </div>
-              </div>
-
-              {/* Shipping Checkbox */}
-              <div style={styles.checkbox}>
-                <input
-                  type="checkbox"
-                  id="shippingToOther"
-                  name="shippingToOther"
-                  checked={formData.shippingToOther}
-                  onChange={handleInputChange}
-                  style={styles.checkboxInput}
-                />
-                <label htmlFor="shippingToOther" style={styles.checkboxLabel}>
-                  Kirim ke alamat lain
-                </label>
               </div>
 
               {/* Additional Notes */}
@@ -641,7 +652,7 @@ const GreenMartCheckout = () => {
                     onChange={handleInputChange}
                     style={styles.paymentRadio}
                   />
-                  <label style={styles.paymentLabel}>Cash on Delivery</label>
+                  <label style={styles.paymentLabel}>💸 Cash on Delivery</label>
                 </div>
                 <div 
                   style={{
@@ -658,7 +669,7 @@ const GreenMartCheckout = () => {
                     onChange={handleInputChange}
                     style={styles.paymentRadio}
                   />
-                  <label style={styles.paymentLabel}>QRIS</label>
+                  <label style={styles.paymentLabel}>📱 QRIS</label>
                 </div>
               </div>
             </div>

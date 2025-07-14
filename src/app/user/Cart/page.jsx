@@ -1,4 +1,5 @@
 "use client";
+import { redirect } from 'next/navigation';
 import React, { useState } from 'react';
 
 const GreenMartCart = () => {
@@ -55,7 +56,7 @@ const GreenMartCart = () => {
   };
 
   const handleProceedToCheckout = () => {
-    alert('Melanjutkan ke checkout...');
+    redirect("Checkout")
   };
 
   const handleReturnToShop = () => {
