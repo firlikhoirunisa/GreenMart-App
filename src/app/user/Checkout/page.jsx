@@ -7,11 +7,11 @@ const GreenMartCheckout = () => {
   const [formData, setFormData] = useState({
     firstName: 'Ayu',
     lastName: 'Dian',
-    address: 'Jalan Hidup Makmur No 45',
-    province: 'yogyakarta',
-    city: 'sleman',
-    email: 'ayayudian@gmail.com',
-    phone: '(+62) 8125729087',
+    address: ' Jl. Pandhawa, Tegal Rejo, Sariharjo',
+    province: 'Yogyakarta',
+    city: 'Sleman',
+    email: 'ayudian@gmail.com',
+    phone: '0812-3456-7890',
     notes: '',
     paymentMethod: 'cod'
   });
@@ -470,7 +470,7 @@ const GreenMartCheckout = () => {
         <div style={styles.checkoutContent}>
           {/* Billing Information */}
           <div style={styles.billingSection}>
-            <h2 style={styles.sectionTitle}>Billing Information</h2>
+            <h2 style={styles.sectionTitle}>Informasi Pembayaran</h2>
             
             <div>
               {/* Name Fields */}

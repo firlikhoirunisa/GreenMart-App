@@ -8,23 +8,23 @@ const GreenMartOrderDetail = () => {
   // Sample order data
   const orderData = {
     orderNumber: '#4152',
-    date: 'April 24, 2024',
+    date: 'Juli 14, 2025',
     totalProducts: '2 Produk',
     status: 'Dikirim',
     paymentMethod: 'Cash on Delivery',
     billingAddress: {
-      storeName: 'Toko Pak Saleh',
-      address: 'Jl. Gaharu, Wonokromo, Jateng 53456'
+      storeName: 'Toko Sayur Segar',
+      address: 'Jln.Canan-Wedi, Klaten, Jateng 53456'
     },
     shippingAddress: {
       name: 'Ayu Dian',
-      address: 'Jln Hidup Makmur No 45, Sleman, D.I Yogyakarta 55234'
+      address: 'Jl. Pandhawa, Tegal Rejo, Sariharjo, Sleman, D.I Yogyakarta 55234'
     },
     contact: {
-      storeEmail: 'pak.saleh@gmail.com',
-      storePhone: '(+62) 8125729087',
-      customerEmail: 'ayayudian@gmail.com',
-      customerPhone: '(+62) 8125729087'
+      storeEmail: 'pak.soleh@gmail.com',
+      storePhone: '08125729087',
+      customerEmail: 'ayudian@gmail.com',
+      customerPhone: '081234567890'
     },
     items: [
       {

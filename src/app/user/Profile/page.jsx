@@ -11,11 +11,11 @@ const GreenMartProfile = () => {
   const [profileData, setProfileData] = useState({
     firstName: 'Ayu',
     lastName: 'Dian',
-    email: 'ayudian11@gmail.com',
-    phone: '(+62) 8125729087',
-    address: 'Jalan Hidup Makmur No 45',
-    province: 'yogyakarta',
-    city: 'sleman',
+    email: 'ayudian@gmail.com',
+    phone: '081234567890',
+    address: 'Jl. Pandhawa, Tegal Rejo, Sariharjo',
+    province: 'Yogyakarta',
+    city: 'Sleman',
     postalCode: '11234',
     currentPassword: '••••••••',
     newPassword: '',
@@ -517,8 +517,8 @@ const GreenMartProfile = () => {
               type="text"
               name="address"
               style={styles.input}
-              placeholder="Jalan Hidup Makmur No 45"
-              defaultValue="Jalan Hidup Makmur No 45"
+              placeholder="Jl. Pandhawa, Tegal Rejo, Sariharjo"
+              defaultValue="Jl. Pandhawa, Tegal Rejo, Sariharjo"
               onFocus={(e) => e.target.style.borderColor = '#22C55E'}
               onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
             />
@@ -564,8 +564,8 @@ const GreenMartProfile = () => {
                 type="text"
                 name="postalCode"
                 style={styles.input}
-                placeholder="11234"
-                defaultValue="11234"
+                placeholder="55234"
+                defaultValue="55234"
                 onFocus={(e) => e.target.style.borderColor = '#22C55E'}
                 onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
               />
@@ -580,8 +580,8 @@ const GreenMartProfile = () => {
                 type="email"
                 name="billingEmail"
                 style={styles.input}
-                placeholder="ayudian11@gmail.com"
-                defaultValue="ayudian11@gmail.com"
+                placeholder="ayudian@gmail.com"
+                defaultValue="ayudian@gmail.com"
                 onFocus={(e) => e.target.style.borderColor = '#22C55E'}
                 onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
               />
@@ -592,8 +592,8 @@ const GreenMartProfile = () => {
                 type="tel"
                 name="billingPhone"
                 style={styles.input}
-                placeholder="(+62) 8125729087"
-                defaultValue="(+62) 8125729087"
+                placeholder="081234567890"
+                defaultValue="081234567890"
                 onFocus={(e) => e.target.style.borderColor = '#22C55E'}
                 onBlur={(e) => e.target.style.borderColor = '#D1D5DB'}
               />

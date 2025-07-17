@@ -381,7 +381,7 @@ const GreenMartWishlist = () => {
           ← 
         </div>
 
-        <h1 style={styles.pageTitle}>Wishlist</h1>
+        <h1 style={styles.pageTitle}>Favorit</h1>
 
         {wishlistItems.length === 0 ? (
           /* Empty Wishlist */
@@ -471,7 +471,7 @@ const GreenMartWishlist = () => {
                           }
                         }}
                       >
-                        {item.availability === 'Tersedia' ? 'Add to Cart' : 'Add to Cart'}
+                        {item.availability === 'Tersedia' ? 'Tambahkan ke Keranjang' : 'Tambahkan ke Keranjang'}
                       </button>
                       <button 
                         style={styles.removeBtn}

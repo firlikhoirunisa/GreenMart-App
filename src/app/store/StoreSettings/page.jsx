@@ -8,10 +8,10 @@ const GreenMartSellerSettings = () => {
   const [storeSettings, setStoreSettings] = useState({
     storeName: 'Toko Sayur Segar',
     storeDescription: 'Menyediakan sayuran segar berkualitas tinggi dari petani lokal',
-    ownerName: 'Pak Saleh',
-    phone: '(+62) 8125729087',
-    email: 'paksaleh@gmail.com',
-    address: 'Jl. Gaharu, Wonokromo, Jawa Tengah 53456',
+    ownerName: 'Pak Soleh',
+    phone: '08125729087',
+    email: 'paksoleh@gmail.com',
+    address: 'Jln.Canan-Wedi, Klaten, Jateng 53456',
     
     // Payment Settings
     acceptCOD: true,

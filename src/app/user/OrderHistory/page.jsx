@@ -8,18 +8,18 @@ const GreenMartOrderHistory = () => {
 
   // Sample order history data
   const orderHistory = [
-    { id: '#3933', date: '4 April, 2024', total: 'Rp 15.000', products: '(5 Produk)', status: 'Proses', statusColor: '#6B7280' },
-    { id: '#5045', date: '27 Mar, 2024', total: 'Rp 10.000', products: '(1 Produk)', status: 'Dalam Perjalanan', statusColor: '#F59E0B' },
-    { id: '#5028', date: '20 Mar, 2024', total: 'Rp 50.000', products: '(4 Produk)', status: 'Selesai', statusColor: '#22C55E' },
-    { id: '#4600', date: '19 Mar, 2024', total: 'Rp 20.000', products: '(1 Produk)', status: 'Selesai', statusColor: '#22C55E' },
-    { id: '#4152', date: '18 Mar, 2024', total: 'Rp 500.000', products: '(13 Produk)', status: 'Selesai', statusColor: '#22C55E' },
-    { id: '#8811', date: '10 Mar, 2024', total: 'Rp 200.000', products: '(7 Produk)', status: 'Selesai', statusColor: '#22C55E' },
-    { id: '#3536', date: '5 Mar, 2024', total: 'Rp 30.000', products: '(2 Produk)', status: 'Selesai', statusColor: '#22C55E' },
-    { id: '#1374', date: '27 Feb, 2024', total: 'Rp 60.000', products: '(2 Produk)', status: 'Selesai', statusColor: '#22C55E' },
-    { id: '#7791', date: '25 Feb, 2024', total: 'Rp 25.500', products: '(2 Produk)', status: 'Selesai', statusColor: '#22C55E' },
-    { id: '#4846', date: '24 Feb, 2024', total: 'Rp 23.000', products: '(1 Produk)', status: 'Selesai', statusColor: '#22C55E' },
-    { id: '#5948', date: '20 Feb, 2024', total: 'Rp 11.000', products: '(1 Produk)', status: 'Selesai', statusColor: '#22C55E' },
-    { id: '#1577', date: '12 Oct, 2024', total: 'Rp 9.000', products: '(1 Produk)', status: 'Selesai', statusColor: '#22C55E' }
+    { id: '#4152', date: '14 Juli, 2025', total: 'Rp 16.000', products: '(10 Produk)', status: 'Proses', statusColor: '#6B7280' },
+    { id: '#5045', date: '27 Mei, 2025', total: 'Rp 10.000', products: '(1 Produk)', status: 'Dalam Perjalanan', statusColor: '#F59E0B' },
+    { id: '#5028', date: '20 Mei, 2025', total: 'Rp 50.000', products: '(4 Produk)', status: 'Selesai', statusColor: '#22C55E' },
+    { id: '#4600', date: '19 Mei, 2025', total: 'Rp 20.000', products: '(1 Produk)', status: 'Selesai', statusColor: '#22C55E' },
+    { id: '#4152', date: '18 April, 2025', total: 'Rp 500.000', products: '(13 Produk)', status: 'Selesai', statusColor: '#22C55E' },
+    { id: '#8811', date: '10 April, 2025', total: 'Rp 200.000', products: '(7 Produk)', status: 'Selesai', statusColor: '#22C55E' },
+    { id: '#3536', date: '5 Maret, 2025', total: 'Rp 30.000', products: '(2 Produk)', status: 'Selesai', statusColor: '#22C55E' },
+    { id: '#1374', date: '27 Februari, 2025', total: 'Rp 60.000', products: '(2 Produk)', status: 'Selesai', statusColor: '#22C55E' },
+    { id: '#7791', date: '25 Februari, 2025', total: 'Rp 25.500', products: '(2 Produk)', status: 'Selesai', statusColor: '#22C55E' },
+    { id: '#4846', date: '24 Januari, 2025', total: 'Rp 23.000', products: '(1 Produk)', status: 'Selesai', statusColor: '#22C55E' },
+    { id: '#5948', date: '20 Januari, 2025', total: 'Rp 11.000', products: '(1 Produk)', status: 'Selesai', statusColor: '#22C55E' },
+    { id: '#1577', date: '12 Januari, 2025', total: 'Rp 9.000', products: '(1 Produk)', status: 'Selesai', statusColor: '#22C55E' }
   ];
 
   const handleSearch = (e) => {

@@ -18,9 +18,9 @@ const GreenMartDetail = ({ productId = 1 }) => {
       originalPrice: 3000,
       discount: '26% Off',
       rating: '★★★★★',
-      reviewCount: '4 Review',
+      reviewCount: '4 Ulasan',
       availability: 'Tersedia',
-      store: 'Pak Saleh',
+      store: 'Toko Sayur Segar',
       category: 'Sayuran Hijau',
       description: 'Selada Hijau Segar dan Bergizi untuk Hidangan Sehat Anda. Nikmati selada hijau berkualitas tinggi yang dipetik langsung dari kebun lokal untuk menjamin kesegarannya. Kaya akan vitamin A, C, dan serat, selada hijau sangat cocok untuk salad, isian sandwich, atau pelengkap makanan Anda. Daunnya yang renyah dan rasanya yang segar memberikan kenikmatan tersendiri dalam setiap gigitan. Pesan sekarang untuk mendapatkan bahan berkualitas terbaik untuk menu sehat keluarga Anda!',
       images: [
@@ -697,7 +697,7 @@ const GreenMartDetail = ({ productId = 1 }) => {
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#16A34A'}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#22C55E'}
                 >
-                  🛒 Add to Cart
+                  🛒 Tambahkan ke Keranjang
                 </button>
                 <button 
                   style={{

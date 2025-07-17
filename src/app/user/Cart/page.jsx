@@ -454,7 +454,7 @@ const GreenMartCart = () => {
 
         <div style={styles.container}>
           <div style={styles.breadcrumb} onClick={goBack}>←</div>
-          <h1 style={styles.pageTitle}>Shopping Cart</h1>
+          <h1 style={styles.pageTitle}>Keranjang Belanja</h1>
           <div style={{textAlign: 'center', padding: '4rem', color: '#6B7280'}}>
             <div style={{fontSize: '4rem', marginBottom: '1rem'}}>🛒</div>
             <div style={{fontSize: '1.125rem', fontWeight: 500}}>Keranjang Anda Kosong</div>
@@ -531,7 +531,7 @@ const GreenMartCart = () => {
           ← 
         </div>
 
-        <h1 style={styles.pageTitle}>Shopping Cart</h1>
+        <h1 style={styles.pageTitle}>Keranjang Belanja</h1>
 
         <div style={styles.cartContent}>
           {/* Cart Table */}
@@ -618,7 +618,7 @@ const GreenMartCart = () => {
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F3F4F6'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
               >
-                Return to shop
+                Kembali ke toko
               </button>
               <button 
                 style={styles.actionBtn}
@@ -626,7 +626,7 @@ const GreenMartCart = () => {
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F3F4F6'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
               >
-                Update Cart
+                Perbarui Keranjang
               </button>
             </div>
           </div>
@@ -656,7 +656,7 @@ const GreenMartCart = () => {
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#16A34A'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#22C55E'}
             >
-              Proceed to checkout
+              Lanjutkan ke pembayaran
             </button>
           </div>
         </div>
@@ -668,7 +668,7 @@ const GreenMartCart = () => {
             <input 
               type="text" 
               style={styles.couponField}
-              placeholder="Enter code"
+              placeholder="Masukkan Kode"
               value={couponCode}
               onChange={(e) => setCouponCode(e.target.value)}
             />
@@ -678,7 +678,7 @@ const GreenMartCart = () => {
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1F2937'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#374151'}
             >
-              Apply Coupon
+              Terapkan Kupon
             </button>
           </div>
         </div>
