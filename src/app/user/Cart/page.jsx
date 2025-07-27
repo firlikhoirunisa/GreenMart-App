@@ -1,6 +1,7 @@
 "use client";
 import { redirect } from 'next/navigation';
 import React, { useState } from 'react';
+import {Header} from '../../../components/layout/Header';
 
 const GreenMartCart = () => {
   const [cartCount, setCartCount] = useState(2);
@@ -414,43 +415,7 @@ const GreenMartCart = () => {
     return (
       <div style={styles.body}>
         {/* Header */}
-        <header style={styles.header}>
-          <div style={styles.headerContainer}>
-            <div style={styles.logo}>
-              Green<span style={styles.logoMart}>MART</span>
-            </div>
-            
-            <div style={styles.searchContainer}>
-              <span style={styles.searchIcon}>🔍</span>
-              <input 
-                type="text" 
-                style={styles.searchInput} 
-                placeholder="Cari produk..."
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                onKeyPress={handleSearch}
-              />
-            </div>
-            
-            <div style={styles.headerActions}>
-              <div style={{...styles.headerIcon, ...styles.wishlistIcon}}>
-                ♡
-              </div>
-              <div style={styles.cartContainer}>
-                <div style={{...styles.headerIcon, ...styles.activeCartIcon}}>
-                  🛒
-                </div>
-                <span style={styles.cartBadge}>{cartCount}</span>
-              </div>
-              <div style={{...styles.headerIcon, ...styles.storeIcon}}>
-                🏪 <span>Toko</span>
-              </div>
-              <div style={{...styles.headerIcon, ...styles.userIcon}}>
-                👤 <span>User</span>
-              </div>
-            </div>
-          </div>
-        </header>
+        <Header />
 
         <div style={styles.container}>
           <div style={styles.breadcrumb} onClick={goBack}>←</div>
@@ -473,51 +438,7 @@ const GreenMartCart = () => {
   return (
     <div style={styles.body}>
       {/* Header */}
-      <header style={styles.header}>
-        <div style={styles.headerContainer}>
-          <div style={styles.logo}>
-            Green<span style={styles.logoMart}>MART</span>
-          </div>
-          
-          <div style={styles.searchContainer}>
-            <span style={styles.searchIcon}>🔍</span>
-            <input 
-              type="text" 
-              style={styles.searchInput} 
-              placeholder="Cari produk..."
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              onKeyPress={handleSearch}
-              onFocus={(e) => {
-                e.target.style.borderColor = '#22C55E';
-                e.target.style.boxShadow = '0 0 0 3px rgba(34, 197, 94, 0.1)';
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = '#D1D5DB';
-                e.target.style.boxShadow = 'none';
-              }}
-            />
-          </div>
-          
-          <div style={styles.headerActions}>
-            <div style={{...styles.headerIcon, ...styles.wishlistIcon}}>
-              ♡
-            </div>
-            <div style={styles.cartContainer}>
-              <div style={{...styles.headerIcon, ...styles.activeCartIcon}}>
-                🛒
-              </div>
-              <span style={styles.cartBadge}>{cartCount}</span>
-            </div>
-            <div style={{...styles.headerIcon, ...styles.storeIcon}}>
-              🏪 <span>Toko</span>
-            </div>
-            <div style={{...styles.headerIcon, ...styles.userIcon}}>
-              👤 <span>User</span>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Content */}
       <div style={styles.container}>
