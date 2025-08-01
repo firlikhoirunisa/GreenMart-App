@@ -178,7 +178,7 @@ const GreenMartAddProduct = () => {
       )
     ) {
       // Redirect back to products page
-      router.push("/seller/products");
+      router.push("/store/ProductManagement");
     }
   };
 

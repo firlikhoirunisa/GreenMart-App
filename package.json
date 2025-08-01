@@ -17,7 +17,7 @@
     "next": "15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.6.3"
+    "import {Header} from '../../../components/layout/Header';": "^7.6.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
