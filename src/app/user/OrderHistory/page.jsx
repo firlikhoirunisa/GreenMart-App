@@ -37,8 +37,12 @@ const GreenMartOrderHistory = () => {
     if (window.history.length > 1) {
       window.history.back();
     } else {
-      window.location.href = '/';
+      window.location.href = '/user/Homepage';
     }
+  };
+
+  const goHome = () => {
+    window.location.href = '/user/Homepage';
   };
 
   const styles = {
@@ -149,13 +153,34 @@ const GreenMartOrderHistory = () => {
       margin: '0 auto',
       padding: '2rem'
     },
+    navigationContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '2rem'
+    },
     breadcrumb: {
-      marginBottom: '2rem',
       cursor: 'pointer',
       color: '#6B7280',
       fontSize: '1.5rem',
       display: 'flex',
       alignItems: 'center'
+    },
+    homeButton: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      color: '#22C55E',
+      cursor: 'pointer',
+      fontSize: '0.875rem',
+      fontWeight: 500,
+      padding: '0.5rem 1rem',
+      backgroundColor: 'white',
+      borderRadius: '0.5rem',
+      border: '1px solid #22C55E',
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+      transition: 'all 0.2s ease',
+      textDecoration: 'none'
     },
     historySection: {
       backgroundColor: 'white',
@@ -286,14 +311,33 @@ const GreenMartOrderHistory = () => {
       <Header />
       {/* Main Content */}
       <div style={styles.container}>
-        {/* Breadcrumb */}
-        <div 
-          style={styles.breadcrumb} 
-          onClick={goBack}
-          onMouseEnter={(e) => e.currentTarget.style.color = '#22C55E'}
-          onMouseLeave={(e) => e.currentTarget.style.color = '#6B7280'}
-        >
-          ← 
+        {/* Navigation Container */}
+        <div style={styles.navigationContainer}>
+          {/* Breadcrumb */}
+          <div 
+            style={styles.breadcrumb} 
+            onClick={goBack}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#22C55E'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#6B7280'}
+          >
+            ← 
+          </div>
+
+          {/* Home Button */}
+          <div 
+            onClick={goHome}
+            style={styles.homeButton}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#22C55E';
+              e.currentTarget.style.color = 'white';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'white';
+              e.currentTarget.style.color = '#22C55E';
+            }}
+          >
+            <span>Kembali ke Beranda</span>
+          </div>
         </div>
 
         {/* Order History Section */}

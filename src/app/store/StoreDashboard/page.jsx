@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const GreenMartSellerDashboard = () => {
   const [searchValue, setSearchValue] = useState('');
   const [activeMenu, setActiveMenu] = useState('dashboard');
+  const router = useRouter();
 
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
@@ -13,21 +15,38 @@ const GreenMartSellerDashboard = () => {
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
-    if (menu === 'products') {
-      alert('Navigasi ke Manajemen Produk');
-    } else if (menu === 'orders') {
-      alert('Navigasi ke Manajemen Pesanan');
-    } else if (menu === 'settings') {
-      alert('Navigasi ke Pengaturan');
-    } else {
-      alert('Navigasi ke ' + menu);
+    
+    // Navigate to different pages based on menu selection
+    switch (menu) {
+      case 'dashboard':
+        router.push('/store/StoreDashboard');
+        break;
+      case 'products':
+        router.push('/store/ProductManagement');
+        break;
+      case 'orders':
+        router.push('/store/OrderList');
+        break;
+      case 'settings':
+        router.push('/store/StoreSettings');
+        break;
+      default:
+        router.push('/store/StoreDashboard');
     }
   };
 
   const handleLogout = () => {
     if (window.confirm('Yakin ingin keluar dari dashboard?')) {
-      alert('Logout berhasil. Kembali ke halaman login...');
+      // Clear any stored authentication data (if using localStorage/sessionStorage)
+      // localStorage.removeItem('authToken'); // Uncomment if using auth tokens
+      
+      // Redirect to login page
+      router.push('/user/Homepage');
     }
+  };
+
+  const handleViewAllOrders = () => {
+    router.push('/seller/orders');
   };
 
   const styles = {
@@ -58,7 +77,8 @@ const GreenMartSellerDashboard = () => {
     logo: {
       fontSize: '1.5rem',
       fontWeight: 'bold',
-      color: '#15803D'
+      color: '#15803D',
+      cursor: 'pointer'
     },
     logoMart: {
       color: '#4ADE80',
@@ -373,7 +393,10 @@ const GreenMartSellerDashboard = () => {
       {/* Header */}
       <header style={styles.header}>
         <div style={styles.headerContainer}>
-          <div style={styles.logo}>
+          <div 
+            style={styles.logo}
+            onClick={() => router.push('/seller/dashboard')}
+          >
             Green<span style={styles.logoMart}>MART</span>
           </div>
           
@@ -483,7 +506,7 @@ const GreenMartSellerDashboard = () => {
                 style={styles.viewAllLink}
                 onClick={(e) => {
                   e.preventDefault();
-                  alert('Navigasi ke halaman pesanan');
+                  handleViewAllOrders();
                 }}
               >
                 Lihat Semua

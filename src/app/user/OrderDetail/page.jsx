@@ -1,5 +1,193 @@
 "use client";
-import {Header} from '../../../components/layout/Header';
+// Commented out the problematic import - you'll need to fix the Header component
+// import Header from '../../../components/layout/Header';
+import { redirect } from "next/navigation";
+import React, { useState } from "react";
+
+// Header component with navigation functions
+const Header = () => {
+  const [cartCount, setCartCount] = useState(2);
+  const [searchValue, setSearchValue] = useState("");
+
+  const goWishlist = () => {
+    window.location.href = "/user/Wishlist";
+  };
+
+  const goCart = () => {
+    window.location.href = "/user/Cart";
+  };
+
+  const goStore = () => {
+    window.location.href = "/store/StoreLogin";
+  };
+
+  const goUser = () => {
+    window.location.href = "/user/Profile";
+  };
+
+  const goOrderHistory = () => {
+    window.location.href = "/user/OrderHistory";
+  };
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      alert(`Mencari: ${searchValue}`);
+    }
+  };
+
+  return (
+    <header style={{
+      background: 'white',
+      borderBottom: '1px solid #E5E7EB',
+      padding: '1rem 0',
+      position: 'sticky',
+      top: 0,
+      zIndex: 100
+    }}>
+      <div style={{
+        maxWidth: '1400px',
+        margin: '0 auto',
+        padding: '0 2rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '2rem'
+      }}>
+        <div style={{
+          fontSize: '1.5rem',
+          fontWeight: 'bold',
+          color: '#15803D'
+        }}>
+          Green<span style={{ color: '#4ADE80', fontWeight: 300 }}>MART</span>
+        </div>
+        
+        <div style={{
+          flex: 1,
+          maxWidth: '400px',
+          position: 'relative'
+        }}>
+          <span style={{
+            position: 'absolute',
+            left: '0.75rem',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            color: '#6B7280'
+          }}>🔍</span>
+          <input 
+            type="text" 
+            placeholder="Cari produk..."
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onKeyPress={handleSearch}
+            onFocus={(e) => {
+              e.target.style.borderColor = "#22C55E";
+              e.target.style.boxShadow = "0 0 0 3px rgba(34, 197, 94, 0.1)";
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = "#D1D5DB";
+              e.target.style.boxShadow = "none";
+            }}
+            style={{
+              width: '100%',
+              padding: '0.75rem 1rem 0.75rem 2.5rem',
+              border: '1px solid #D1D5DB',
+              borderRadius: '0.5rem',
+              fontSize: '0.875rem',
+              outline: 'none',
+              boxSizing: 'border-box'
+            }}
+          />
+        </div>
+        
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '2rem'
+        }}>
+          <div 
+            onClick={goWishlist}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              color: '#374151',
+              cursor: 'pointer',
+              fontSize: '0.875rem',
+              fontWeight: 500
+            }}
+          >
+            ♡
+          </div>
+          <div style={{
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.25rem'
+          }}>
+            <div 
+              onClick={goCart}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                color: '#374151',
+                cursor: 'pointer',
+                fontSize: '0.875rem',
+                fontWeight: 500
+              }}
+            >
+              🛒
+            </div>
+            <span style={{
+              background: '#EF4444',
+              color: 'white',
+              fontSize: '0.75rem',
+              borderRadius: '50%',
+              width: '1.25rem',
+              height: '1.25rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              top: '-0.25rem',
+              right: '-0.25rem'
+            }}>
+              {cartCount}
+            </span>
+          </div>
+          <div 
+            onClick={goStore}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              color: '#374151',
+              cursor: 'pointer',
+              fontSize: '0.875rem',
+              fontWeight: 500
+            }}
+          >
+            🏪 <span>Toko</span>
+          </div>
+          <div 
+            onClick={goUser}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              color: '#374151',
+              cursor: 'pointer',
+              fontSize: '0.875rem',
+              fontWeight: 500
+            }}
+          >
+            👤 <span>User</span>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
 
 const GreenMartOrderDetail = () => {
 
@@ -54,8 +242,12 @@ const GreenMartOrderDetail = () => {
     if (window.history.length > 1) {
       window.history.back();
     } else {
-      window.location.href = '/';
+      window.location.href = '/user/Homepage';
     }
+  };
+
+  const goOrderHistory = () => {
+    window.location.href = "/user/OrderHistory";
   };
 
   const styles = {
@@ -65,101 +257,6 @@ const GreenMartOrderDetail = () => {
       lineHeight: 1.6,
       margin: 0,
       padding: 0
-    },
-    header: {
-      background: 'white',
-      borderBottom: '1px solid #E5E7EB',
-      padding: '1rem 0',
-      position: 'sticky',
-      top: 0,
-      zIndex: 100
-    },
-    headerContainer: {
-      maxWidth: '1400px',
-      margin: '0 auto',
-      padding: '0 2rem',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      gap: '2rem'
-    },
-    logo: {
-      fontSize: '1.5rem',
-      fontWeight: 'bold',
-      color: '#15803D'
-    },
-    logoMart: {
-      color: '#4ADE80',
-      fontWeight: 300
-    },
-    searchContainer: {
-      flex: 1,
-      maxWidth: '400px',
-      position: 'relative'
-    },
-    searchInput: {
-      width: '100%',
-      padding: '0.75rem 1rem 0.75rem 2.5rem',
-      border: '1px solid #D1D5DB',
-      borderRadius: '0.5rem',
-      fontSize: '0.875rem',
-      outline: 'none',
-      boxSizing: 'border-box'
-    },
-    searchIcon: {
-      position: 'absolute',
-      left: '0.75rem',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      color: '#6B7280'
-    },
-    headerActions: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '2rem'
-    },
-    headerIcon: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.5rem',
-      color: '#374151',
-      cursor: 'pointer',
-      fontSize: '0.875rem',
-      fontWeight: 500
-    },
-    cartBadge: {
-      background: '#EF4444',
-      color: 'white',
-      fontSize: '0.75rem',
-      borderRadius: '50%',
-      width: '1.25rem',
-      height: '1.25rem',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'absolute',
-      top: '-0.25rem',
-      right: '-0.25rem'
-    },
-    wishlistIcon: {
-      fontSize: '1.25rem',
-      color: '#6B7280'
-    },
-    cartContainer: {
-      position: 'relative',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.25rem'
-    },
-    storeIcon: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.5rem'
-    },
-    userIcon: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.5rem'
     },
     container: {
       maxWidth: '1400px',
@@ -410,7 +507,7 @@ const GreenMartOrderDetail = () => {
   return (
     <div style={styles.body}>
       {/* Header */}
-      <Header/>
+      <Header />
 
       {/* Main Content */}
       <div style={styles.container}>
@@ -422,6 +519,37 @@ const GreenMartOrderDetail = () => {
           onMouseLeave={(e) => e.currentTarget.style.color = '#6B7280'}
         >
           ← 
+        </div>
+
+        {/* Order History Button */}
+        <div 
+          onClick={goOrderHistory}
+          style={{
+            marginBottom: '1rem',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            color: '#22C55E',
+            cursor: 'pointer',
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            padding: '0.5rem 1rem',
+            backgroundColor: 'white',
+            borderRadius: '0.5rem',
+            border: '1px solid #22C55E',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+            transition: 'all 0.2s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#22C55E';
+            e.currentTarget.style.color = 'white';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'white';
+            e.currentTarget.style.color = '#22C55E';
+          }}
+        >
+          📋 <span>Lihat riwayat pesanan</span>
         </div>
 
         {/* Order Header */}
@@ -491,7 +619,7 @@ const GreenMartOrderDetail = () => {
                   <div style={{...styles.stepCircle, ...styles.stepCircleInactive}}>
                     04
                   </div>
-                  <div style={styles.stepLabel}>Terkrim</div>
+                  <div style={styles.stepLabel}>Terkirim</div>
                 </div>
               </div>
             </div>

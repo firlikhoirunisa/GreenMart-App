@@ -61,7 +61,7 @@ const GreenMartCart = () => {
   };
 
   const handleReturnToShop = () => {
-    window.location.href = '/';
+    window.location.href = '/user/Homepage';
   };
 
   const handleUpdateCart = () => {

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const SellerLogin = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const SellerLogin = () => {
   const [showModal, setShowModal] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [windowWidth, setWindowWidth] = useState(1200);
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -118,10 +120,30 @@ const SellerLogin = () => {
       agreeTerms: false
     });
     setLoginError('');
+    
+    // Redirect to seller dashboard after successful login/registration
+    router.push('/store/StoreDashboard');
   };
 
   const forgotPassword = () => {
     alert('Fitur lupa password akan segera hadir!');
+  };
+
+  const handleLogoClick = () => {
+    // Redirect to main homepage
+    router.push('/');
+  };
+
+  const handleTermsClick = (e) => {
+    e.preventDefault();
+    // Redirect to terms page
+    router.push('/terms');
+  };
+
+  const handlePrivacyClick = (e) => {
+    e.preventDefault();
+    // Redirect to privacy policy page
+    router.push('/privacy');
   };
 
   const styles = {
@@ -190,7 +212,8 @@ const SellerLogin = () => {
     logoH1: {
       fontSize: '2.5rem',
       fontWeight: 'bold',
-      margin: 0
+      margin: 0,
+      cursor: 'pointer'
     },
     logoGreen: {
       color: '#15803D'
@@ -295,7 +318,8 @@ const SellerLogin = () => {
     },
     checkboxLink: {
       color: '#22C55E',
-      textDecoration: 'none'
+      textDecoration: 'none',
+      cursor: 'pointer'
     },
     modal: {
       position: 'fixed',
@@ -379,10 +403,13 @@ const SellerLogin = () => {
           <div style={styles.formContainer}>
             {/* Logo */}
             <div style={styles.logo}>
-              <h1 style={{
-                ...styles.logoH1,
-                ...(isMobile ? { fontSize: '2rem' } : {})
-              }}>
+              <h1 
+                style={{
+                  ...styles.logoH1,
+                  ...(isMobile ? { fontSize: '2rem' } : {})
+                }}
+                onClick={handleLogoClick}
+              >
                 <span style={styles.logoGreen}>Green</span>
                 <span style={styles.logoMart}>MART</span>
               </h1>
@@ -516,11 +543,23 @@ const SellerLogin = () => {
                     />
                     <label style={styles.checkboxLabel}>
                       Saya menyetujui{' '}
-                      <a href="#" style={styles.checkboxLink}>
+                      <a 
+                        href="#" 
+                        style={styles.checkboxLink}
+                        onClick={handleTermsClick}
+                        onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+                        onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+                      >
                         Syarat & Ketentuan
                       </a>{' '}
                       dan{' '}
-                      <a href="#" style={styles.checkboxLink}>
+                      <a 
+                        href="#" 
+                        style={styles.checkboxLink}
+                        onClick={handlePrivacyClick}
+                        onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+                        onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+                      >
                         Kebijakan Privasi
                       </a>
                     </label>

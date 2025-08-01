@@ -1,74 +1,85 @@
 "use client";
-import React, { useState } from 'react';
-import {Header} from '../../../components/layout/Header';
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Header } from "../../../components/layout/Header";
 
 const GreenMartAddProduct = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [activeMenu, setActiveMenu] = useState('products');
+  const [searchValue, setSearchValue] = useState("");
+  const [activeMenu, setActiveMenu] = useState("products");
+  const router = useRouter();
 
   const [productData, setProductData] = useState({
-    name: '',
-    category: '',
-    price: '',
-    stock: '',
-    description: '',
-    imageUrl: '',
-    weight: '',
-    unit: 'kg',
-    origin: '',
-    status: 'active'
+    name: "",
+    category: "",
+    price: "",
+    stock: "",
+    description: "",
+    imageUrl: "",
+    weight: "",
+    unit: "kg",
+    origin: "",
+    status: "active",
   });
 
   const [errors, setErrors] = useState({});
 
   const categories = [
-    'Sayuran Hijau',
-    'Sayuran Buah', 
-    'Sayuran Umbi',
-    'Sayuran Batang',
-    'Bumbu Dapur',
-    'Buah-buahan'
+    "Sayuran Hijau",
+    "Sayuran Buah",
+    "Sayuran Umbi",
+    "Sayuran Batang",
+    "Bumbu Dapur",
+    "Buah-buahan",
   ];
 
   const units = [
-    { value: 'kg', label: 'Kilogram (kg)' },
-    { value: 'gram', label: 'Gram (g)' },
-    { value: 'pcs', label: 'Pieces (pcs)' },
-    { value: 'ikat', label: 'Ikat' },
-    { value: 'pack', label: 'Pack' }
+    { value: "kg", label: "Kilogram (kg)" },
+    { value: "gram", label: "Gram (g)" },
+    { value: "pcs", label: "Pieces (pcs)" },
+    { value: "ikat", label: "Ikat" },
+    { value: "pack", label: "Pack" },
   ];
 
   const handleSearch = (e) => {
-    if (e.key === 'Enter') {
-      alert('Mencari: ' + searchValue);
+    if (e.key === "Enter") {
+      alert("Mencari: " + searchValue);
     }
   };
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
-    if (menu === 'dashboard') {
-      alert('Kembali ke Dashboard');
-    } else if (menu === 'products') {
-      alert('Ke Manajemen Produk');
-    } else if (menu === 'orders') {
-      alert('Ke Daftar Pesanan');
-    } else if (menu === 'settings') {
-      alert('Ke Pengaturan');
+
+    // Navigate to different pages based on menu selection
+    switch (menu) {
+      case "dashboard":
+        router.push("/store/StoreDashboard");
+        break;
+      case "products":
+        router.push("/store/ProductManagement");
+        break;
+      case "orders":
+        router.push("/store/OrderList");
+        break;
+      case "settings":
+        router.push("/store/StoreSettings");
+        break;
+      default:
+        router.push("/store/StoreDashboard");
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProductData(prev => ({
+    setProductData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ''
+        [name]: "",
       }));
     }
   };
@@ -77,37 +88,37 @@ const GreenMartAddProduct = () => {
     const newErrors = {};
 
     if (!productData.name.trim()) {
-      newErrors.name = 'Nama produk harus diisi';
+      newErrors.name = "Nama produk harus diisi";
     }
 
     if (!productData.category) {
-      newErrors.category = 'Kategori harus dipilih';
+      newErrors.category = "Kategori harus dipilih";
     }
 
     if (!productData.price || productData.price <= 0) {
-      newErrors.price = 'Harga harus diisi dan lebih dari 0';
+      newErrors.price = "Harga harus diisi dan lebih dari 0";
     }
 
     if (!productData.stock || productData.stock < 0) {
-      newErrors.stock = 'Stok harus diisi dan tidak boleh negatif';
+      newErrors.stock = "Stok harus diisi dan tidak boleh negatif";
     }
 
     if (!productData.description.trim()) {
-      newErrors.description = 'Deskripsi produk harus diisi';
+      newErrors.description = "Deskripsi produk harus diisi";
     }
 
     if (!productData.imageUrl.trim()) {
-      newErrors.imageUrl = 'URL gambar harus diisi';
+      newErrors.imageUrl = "URL gambar harus diisi";
     } else if (!isValidUrl(productData.imageUrl)) {
-      newErrors.imageUrl = 'URL gambar tidak valid';
+      newErrors.imageUrl = "URL gambar tidak valid";
     }
 
     if (!productData.weight || productData.weight <= 0) {
-      newErrors.weight = 'Berat/jumlah harus diisi dan lebih dari 0';
+      newErrors.weight = "Berat/jumlah harus diisi dan lebih dari 0";
     }
 
     if (!productData.origin.trim()) {
-      newErrors.origin = 'Asal produk harus diisi';
+      newErrors.origin = "Asal produk harus diisi";
     }
 
     setErrors(newErrors);
@@ -133,313 +144,325 @@ const GreenMartAddProduct = () => {
         stock: parseInt(productData.stock),
         weight: parseFloat(productData.weight),
         sold: 0,
-        dateAdded: new Date().toISOString().split('T')[0]
+        dateAdded: new Date().toISOString().split("T")[0],
       };
-      
-      console.log('New Product:', newProduct);
-      alert('Produk berhasil ditambahkan!');
-      
+
+      console.log("New Product:", newProduct);
+      alert("Produk berhasil ditambahkan!");
+
       // Reset form
       setProductData({
-        name: '',
-        category: '',
-        price: '',
-        stock: '',
-        description: '',
-        imageUrl: '',
-        weight: '',
-        unit: 'kg',
-        origin: '',
-        status: 'active'
+        name: "",
+        category: "",
+        price: "",
+        stock: "",
+        description: "",
+        imageUrl: "",
+        weight: "",
+        unit: "kg",
+        origin: "",
+        status: "active",
       });
+
+      // Redirect to products page after successful save
+      setTimeout(() => {
+        router.push("/store/ProductManagement");
+      }, 1000);
     }
   };
 
   const handleCancel = () => {
-    if (window.confirm('Yakin ingin membatalkan? Data yang sudah diisi akan hilang.')) {
-      alert('Kembali ke halaman sebelumnya');
+    if (
+      window.confirm(
+        "Yakin ingin membatalkan? Data yang sudah diisi akan hilang."
+      )
+    ) {
+      // Redirect back to products page
+      router.push("/seller/products");
     }
   };
 
   const styles = {
     body: {
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif',
-      backgroundColor: '#F9FAFB',
+      fontFamily:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif',
+      backgroundColor: "#F9FAFB",
       lineHeight: 1.6,
       margin: 0,
-      padding: 0
+      padding: 0,
     },
     header: {
-      background: 'white',
-      borderBottom: '1px solid #E5E7EB',
-      padding: '1rem 0',
-      position: 'sticky',
+      background: "white",
+      borderBottom: "1px solid #E5E7EB",
+      padding: "1rem 0",
+      position: "sticky",
       top: 0,
-      zIndex: 100
+      zIndex: 100,
     },
     headerContainer: {
-      maxWidth: '1400px',
-      margin: '0 auto',
-      padding: '0 2rem',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      gap: '2rem'
+      maxWidth: "1400px",
+      margin: "0 auto",
+      padding: "0 2rem",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: "2rem",
     },
     logo: {
-      fontSize: '1.5rem',
-      fontWeight: 'bold',
-      color: '#15803D'
+      fontSize: "1.5rem",
+      fontWeight: "bold",
+      color: "#15803D",
+      cursor: "pointer",
     },
     logoMart: {
-      color: '#4ADE80',
-      fontWeight: 300
+      color: "#4ADE80",
+      fontWeight: 300,
     },
     searchContainer: {
       flex: 1,
-      maxWidth: '400px',
-      position: 'relative'
+      maxWidth: "400px",
+      position: "relative",
     },
     searchInput: {
-      width: '100%',
-      padding: '0.75rem 1rem 0.75rem 2.5rem',
-      border: '1px solid #D1D5DB',
-      borderRadius: '0.5rem',
-      fontSize: '0.875rem',
-      outline: 'none',
-      boxSizing: 'border-box'
+      width: "100%",
+      padding: "0.75rem 1rem 0.75rem 2.5rem",
+      border: "1px solid #D1D5DB",
+      borderRadius: "0.5rem",
+      fontSize: "0.875rem",
+      outline: "none",
+      boxSizing: "border-box",
     },
     searchIcon: {
-      position: 'absolute',
-      left: '0.75rem',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      color: '#6B7280'
+      position: "absolute",
+      left: "0.75rem",
+      top: "50%",
+      transform: "translateY(-50%)",
+      color: "#6B7280",
     },
     headerActions: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '2rem'
+      display: "flex",
+      alignItems: "center",
+      gap: "2rem",
     },
     logoutBtn: {
-      backgroundColor: '#EF4444',
-      color: 'white',
-      padding: '0.5rem 1rem',
-      border: 'none',
-      borderRadius: '0.5rem',
-      fontSize: '0.875rem',
-      cursor: 'pointer',
-      transition: 'background-color 0.2s'
+      backgroundColor: "#EF4444",
+      color: "white",
+      padding: "0.5rem 1rem",
+      border: "none",
+      borderRadius: "0.5rem",
+      fontSize: "0.875rem",
+      cursor: "pointer",
+      transition: "background-color 0.2s",
     },
     dashboardLayout: {
-      display: 'flex',
-      minHeight: 'calc(100vh - 80px)'
+      display: "flex",
+      minHeight: "calc(100vh - 80px)",
     },
     sidebar: {
-      width: '12rem',
-      backgroundColor: 'white',
-      borderRight: '1px solid #E5E7EB',
-      padding: '1.5rem 0'
+      width: "12rem",
+      backgroundColor: "white",
+      borderRight: "1px solid #E5E7EB",
+      padding: "1.5rem 0",
     },
     sidebarTitle: {
-      fontSize: '1rem',
-      fontWeight: 'bold',
-      color: '#1F2937',
-      padding: '0 1.5rem',
-      marginBottom: '1.5rem'
+      fontSize: "1rem",
+      fontWeight: "bold",
+      color: "#1F2937",
+      padding: "0 1.5rem",
+      marginBottom: "1.5rem",
     },
     sidebarMenu: {
-      listStyle: 'none',
+      listStyle: "none",
       padding: 0,
-      margin: 0
+      margin: 0,
     },
     menuItem: {
-      margin: '0.25rem 0'
+      margin: "0.25rem 0",
     },
     menuLink: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.75rem',
-      padding: '0.75rem 1.5rem',
-      color: '#6B7280',
-      fontSize: '0.875rem',
-      cursor: 'pointer',
-      transition: 'all 0.2s'
+      display: "flex",
+      alignItems: "center",
+      gap: "0.75rem",
+      padding: "0.75rem 1.5rem",
+      color: "#6B7280",
+      fontSize: "0.875rem",
+      cursor: "pointer",
+      transition: "all 0.2s",
     },
     menuLinkActive: {
-      backgroundColor: '#F0FDF4',
-      color: '#22C55E',
-      borderRight: '3px solid #22C55E'
+      backgroundColor: "#F0FDF4",
+      color: "#22C55E",
+      borderRight: "3px solid #22C55E",
     },
     menuIcon: {
-      fontSize: '1rem'
+      fontSize: "1rem",
     },
     mainContent: {
       flex: 1,
-      padding: '2rem',
-      maxWidth: '800px',
-      margin: '0 auto'
+      padding: "2rem",
+      maxWidth: "800px",
+      margin: "0 auto",
     },
     pageHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: '2rem'
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: "2rem",
     },
     pageTitle: {
-      fontSize: '1.75rem',
-      fontWeight: 'bold',
-      color: '#1F2937',
-      margin: 0
+      fontSize: "1.75rem",
+      fontWeight: "bold",
+      color: "#1F2937",
+      margin: 0,
     },
     actionButtons: {
-      display: 'flex',
-      gap: '1rem'
+      display: "flex",
+      gap: "1rem",
     },
     cancelBtn: {
-      backgroundColor: 'white',
-      color: '#6B7280',
-      padding: '0.75rem 1.5rem',
-      border: '1px solid #D1D5DB',
-      borderRadius: '0.5rem',
-      fontSize: '0.875rem',
+      backgroundColor: "white",
+      color: "#6B7280",
+      padding: "0.75rem 1.5rem",
+      border: "1px solid #D1D5DB",
+      borderRadius: "0.5rem",
+      fontSize: "0.875rem",
       fontWeight: 500,
-      cursor: 'pointer',
-      transition: 'all 0.2s'
+      cursor: "pointer",
+      transition: "all 0.2s",
     },
     saveBtn: {
-      backgroundColor: '#22C55E',
-      color: 'white',
-      padding: '0.75rem 1.5rem',
-      border: 'none',
-      borderRadius: '0.5rem',
-      fontSize: '0.875rem',
+      backgroundColor: "#22C55E",
+      color: "white",
+      padding: "0.75rem 1.5rem",
+      border: "none",
+      borderRadius: "0.5rem",
+      fontSize: "0.875rem",
       fontWeight: 500,
-      cursor: 'pointer',
-      transition: 'background-color 0.2s'
+      cursor: "pointer",
+      transition: "background-color 0.2s",
     },
     formCard: {
-      backgroundColor: 'white',
-      borderRadius: '1rem',
-      padding: '2rem',
-      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-      border: '1px solid #E5E7EB'
+      backgroundColor: "white",
+      borderRadius: "1rem",
+      padding: "2rem",
+      boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+      border: "1px solid #E5E7EB",
     },
     formSection: {
-      marginBottom: '2rem'
+      marginBottom: "2rem",
     },
     sectionTitle: {
-      fontSize: '1.125rem',
+      fontSize: "1.125rem",
       fontWeight: 600,
-      color: '#1F2937',
-      marginBottom: '1rem',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.5rem'
+      color: "#1F2937",
+      marginBottom: "1rem",
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem",
     },
     sectionIcon: {
-      fontSize: '1.25rem'
+      fontSize: "1.25rem",
     },
     formRow: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: '1rem',
-      marginBottom: '1rem'
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "1rem",
+      marginBottom: "1rem",
     },
     formGroup: {
-      marginBottom: '1rem'
+      marginBottom: "1rem",
     },
     label: {
-      display: 'block',
-      fontSize: '0.875rem',
+      display: "block",
+      fontSize: "0.875rem",
       fontWeight: 500,
-      color: '#374151',
-      marginBottom: '0.5rem'
+      color: "#374151",
+      marginBottom: "0.5rem",
     },
     required: {
-      color: '#EF4444'
+      color: "#EF4444",
     },
     input: {
-      width: '100%',
-      padding: '0.75rem',
-      border: '1px solid #D1D5DB',
-      borderRadius: '0.5rem',
-      fontSize: '0.875rem',
-      outline: 'none',
-      boxSizing: 'border-box',
-      transition: 'border-color 0.2s'
+      width: "100%",
+      padding: "0.75rem",
+      border: "1px solid #D1D5DB",
+      borderRadius: "0.5rem",
+      fontSize: "0.875rem",
+      outline: "none",
+      boxSizing: "border-box",
+      transition: "border-color 0.2s",
     },
     inputError: {
-      borderColor: '#EF4444'
+      borderColor: "#EF4444",
     },
     select: {
-      width: '100%',
-      padding: '0.75rem',
-      border: '1px solid #D1D5DB',
-      borderRadius: '0.5rem',
-      fontSize: '0.875rem',
-      outline: 'none',
-      boxSizing: 'border-box',
-      cursor: 'pointer',
-      backgroundColor: 'white'
+      width: "100%",
+      padding: "0.75rem",
+      border: "1px solid #D1D5DB",
+      borderRadius: "0.5rem",
+      fontSize: "0.875rem",
+      outline: "none",
+      boxSizing: "border-box",
+      cursor: "pointer",
+      backgroundColor: "white",
     },
     textarea: {
-      width: '100%',
-      padding: '0.75rem',
-      border: '1px solid #D1D5DB',
-      borderRadius: '0.5rem',
-      fontSize: '0.875rem',
-      outline: 'none',
-      boxSizing: 'border-box',
-      minHeight: '100px',
-      resize: 'vertical',
-      fontFamily: 'inherit'
+      width: "100%",
+      padding: "0.75rem",
+      border: "1px solid #D1D5DB",
+      borderRadius: "0.5rem",
+      fontSize: "0.875rem",
+      outline: "none",
+      boxSizing: "border-box",
+      minHeight: "100px",
+      resize: "vertical",
+      fontFamily: "inherit",
     },
     errorMsg: {
-      color: '#EF4444',
-      fontSize: '0.75rem',
-      marginTop: '0.25rem'
+      color: "#EF4444",
+      fontSize: "0.75rem",
+      marginTop: "0.25rem",
     },
     imagePreview: {
-      marginTop: '1rem',
-      textAlign: 'center'
+      marginTop: "1rem",
+      textAlign: "center",
     },
     previewImg: {
-      maxWidth: '200px',
-      maxHeight: '200px',
-      borderRadius: '0.5rem',
-      border: '1px solid #E5E7EB'
+      maxWidth: "200px",
+      maxHeight: "200px",
+      borderRadius: "0.5rem",
+      border: "1px solid #E5E7EB",
     },
     previewPlaceholder: {
-      width: '200px',
-      height: '150px',
-      backgroundColor: '#F3F4F6',
-      borderRadius: '0.5rem',
-      border: '2px dashed #D1D5DB',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      margin: '0 auto',
-      color: '#6B7280',
-      fontSize: '0.875rem'
+      width: "200px",
+      height: "150px",
+      backgroundColor: "#F3F4F6",
+      borderRadius: "0.5rem",
+      border: "2px dashed #D1D5DB",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      margin: "0 auto",
+      color: "#6B7280",
+      fontSize: "0.875rem",
     },
     weightUnit: {
-      display: 'flex',
-      gap: '0.5rem'
+      display: "flex",
+      gap: "0.5rem",
     },
     weightInput: {
-      flex: 2
+      flex: 2,
     },
     unitSelect: {
-      flex: 1
-    }
+      flex: 1,
+    },
   };
 
   const menuItems = [
-    { id: 'dashboard', icon: '🏠', label: 'Dashboard' },
-    { id: 'products', icon: '📦', label: 'Produk' },
-    { id: 'orders', icon: '📋', label: 'Pesanan' },
-    { id: 'settings', icon: '⚙️', label: 'Pengaturan' }
+    { id: "dashboard", icon: "🏠", label: "Dashboard" },
+    { id: "products", icon: "📦", label: "Produk" },
+    { id: "orders", icon: "📋", label: "Pesanan" },
+    { id: "settings", icon: "⚙️", label: "Pengaturan" },
   ];
 
   return (
@@ -450,7 +473,7 @@ const GreenMartAddProduct = () => {
         {/* Sidebar */}
         <aside style={styles.sidebar}>
           <h2 style={styles.sidebarTitle}>Menu Toko</h2>
-          
+
           <nav>
             <ul style={styles.sidebarMenu}>
               {menuItems.map((item) => (
@@ -458,17 +481,17 @@ const GreenMartAddProduct = () => {
                   <div
                     style={{
                       ...styles.menuLink,
-                      ...(activeMenu === item.id ? styles.menuLinkActive : {})
+                      ...(activeMenu === item.id ? styles.menuLinkActive : {}),
                     }}
                     onClick={() => handleMenuClick(item.id)}
                     onMouseEnter={(e) => {
                       if (activeMenu !== item.id) {
-                        e.currentTarget.style.backgroundColor = '#F9FAFB';
+                        e.currentTarget.style.backgroundColor = "#F9FAFB";
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (activeMenu !== item.id) {
-                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.backgroundColor = "transparent";
                       }
                     }}
                   >
@@ -487,25 +510,29 @@ const GreenMartAddProduct = () => {
           <div style={styles.pageHeader}>
             <h1 style={styles.pageTitle}>Tambah Produk Baru</h1>
             <div style={styles.actionButtons}>
-              <button 
+              <button
                 style={styles.cancelBtn}
                 onClick={handleCancel}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#F3F4F6';
-                  e.target.style.borderColor = '#9CA3AF';
+                  e.target.style.backgroundColor = "#F3F4F6";
+                  e.target.style.borderColor = "#9CA3AF";
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = 'white';
-                  e.target.style.borderColor = '#D1D5DB';
+                  e.target.style.backgroundColor = "white";
+                  e.target.style.borderColor = "#D1D5DB";
                 }}
               >
                 Batal
               </button>
-              <button 
+              <button
                 style={styles.saveBtn}
                 onClick={handleSaveProduct}
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#16A34A'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = '#22C55E'}
+                onMouseEnter={(e) =>
+                  (e.target.style.backgroundColor = "#16A34A")
+                }
+                onMouseLeave={(e) =>
+                  (e.target.style.backgroundColor = "#22C55E")
+                }
               >
                 Simpan Produk
               </button>
@@ -533,12 +560,18 @@ const GreenMartAddProduct = () => {
                   placeholder="Contoh: Tomat Merah Segar"
                   style={{
                     ...styles.input,
-                    ...(errors.name ? styles.inputError : {})
+                    ...(errors.name ? styles.inputError : {}),
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#22C55E'}
-                  onBlur={(e) => e.target.style.borderColor = errors.name ? '#EF4444' : '#D1D5DB'}
+                  onFocus={(e) => (e.target.style.borderColor = "#22C55E")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = errors.name
+                      ? "#EF4444"
+                      : "#D1D5DB")
+                  }
                 />
-                {errors.name && <div style={styles.errorMsg}>{errors.name}</div>}
+                {errors.name && (
+                  <div style={styles.errorMsg}>{errors.name}</div>
+                )}
               </div>
 
               <div style={styles.formRow}>
@@ -552,15 +585,19 @@ const GreenMartAddProduct = () => {
                     onChange={handleInputChange}
                     style={{
                       ...styles.select,
-                      ...(errors.category ? styles.inputError : {})
+                      ...(errors.category ? styles.inputError : {}),
                     }}
                   >
                     <option value="">Pilih Kategori</option>
                     {categories.map((cat) => (
-                      <option key={cat} value={cat}>{cat}</option>
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
                     ))}
                   </select>
-                  {errors.category && <div style={styles.errorMsg}>{errors.category}</div>}
+                  {errors.category && (
+                    <div style={styles.errorMsg}>{errors.category}</div>
+                  )}
                 </div>
 
                 <div>
@@ -575,12 +612,18 @@ const GreenMartAddProduct = () => {
                     placeholder="Contoh: Boyolali, Jawa Tengah"
                     style={{
                       ...styles.input,
-                      ...(errors.origin ? styles.inputError : {})
+                      ...(errors.origin ? styles.inputError : {}),
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#22C55E'}
-                    onBlur={(e) => e.target.style.borderColor = errors.origin ? '#EF4444' : '#D1D5DB'}
+                    onFocus={(e) => (e.target.style.borderColor = "#22C55E")}
+                    onBlur={(e) =>
+                      (e.target.style.borderColor = errors.origin
+                        ? "#EF4444"
+                        : "#D1D5DB")
+                    }
                   />
-                  {errors.origin && <div style={styles.errorMsg}>{errors.origin}</div>}
+                  {errors.origin && (
+                    <div style={styles.errorMsg}>{errors.origin}</div>
+                  )}
                 </div>
               </div>
 
@@ -595,12 +638,18 @@ const GreenMartAddProduct = () => {
                   placeholder="Jelaskan kualitas, keunggulan, dan informasi penting lainnya tentang produk..."
                   style={{
                     ...styles.textarea,
-                    ...(errors.description ? styles.inputError : {})
+                    ...(errors.description ? styles.inputError : {}),
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#22C55E'}
-                  onBlur={(e) => e.target.style.borderColor = errors.description ? '#EF4444' : '#D1D5DB'}
+                  onFocus={(e) => (e.target.style.borderColor = "#22C55E")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = errors.description
+                      ? "#EF4444"
+                      : "#D1D5DB")
+                  }
                 />
-                {errors.description && <div style={styles.errorMsg}>{errors.description}</div>}
+                {errors.description && (
+                  <div style={styles.errorMsg}>{errors.description}</div>
+                )}
               </div>
             </div>
 
@@ -625,12 +674,18 @@ const GreenMartAddProduct = () => {
                     min="0"
                     style={{
                       ...styles.input,
-                      ...(errors.price ? styles.inputError : {})
+                      ...(errors.price ? styles.inputError : {}),
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#22C55E'}
-                    onBlur={(e) => e.target.style.borderColor = errors.price ? '#EF4444' : '#D1D5DB'}
+                    onFocus={(e) => (e.target.style.borderColor = "#22C55E")}
+                    onBlur={(e) =>
+                      (e.target.style.borderColor = errors.price
+                        ? "#EF4444"
+                        : "#D1D5DB")
+                    }
                   />
-                  {errors.price && <div style={styles.errorMsg}>{errors.price}</div>}
+                  {errors.price && (
+                    <div style={styles.errorMsg}>{errors.price}</div>
+                  )}
                 </div>
 
                 <div>
@@ -646,12 +701,18 @@ const GreenMartAddProduct = () => {
                     min="0"
                     style={{
                       ...styles.input,
-                      ...(errors.stock ? styles.inputError : {})
+                      ...(errors.stock ? styles.inputError : {}),
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#22C55E'}
-                    onBlur={(e) => e.target.style.borderColor = errors.stock ? '#EF4444' : '#D1D5DB'}
+                    onFocus={(e) => (e.target.style.borderColor = "#22C55E")}
+                    onBlur={(e) =>
+                      (e.target.style.borderColor = errors.stock
+                        ? "#EF4444"
+                        : "#D1D5DB")
+                    }
                   />
-                  {errors.stock && <div style={styles.errorMsg}>{errors.stock}</div>}
+                  {errors.stock && (
+                    <div style={styles.errorMsg}>{errors.stock}</div>
+                  )}
                 </div>
               </div>
 
@@ -671,16 +732,20 @@ const GreenMartAddProduct = () => {
                     style={{
                       ...styles.input,
                       ...styles.weightInput,
-                      ...(errors.weight ? styles.inputError : {})
+                      ...(errors.weight ? styles.inputError : {}),
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#22C55E'}
-                    onBlur={(e) => e.target.style.borderColor = errors.weight ? '#EF4444' : '#D1D5DB'}
+                    onFocus={(e) => (e.target.style.borderColor = "#22C55E")}
+                    onBlur={(e) =>
+                      (e.target.style.borderColor = errors.weight
+                        ? "#EF4444"
+                        : "#D1D5DB")
+                    }
                   />
                   <select
                     name="unit"
                     value={productData.unit}
                     onChange={handleInputChange}
-                    style={{...styles.select, ...styles.unitSelect}}
+                    style={{ ...styles.select, ...styles.unitSelect }}
                   >
                     {units.map((unit) => (
                       <option key={unit.value} value={unit.value}>
@@ -689,7 +754,9 @@ const GreenMartAddProduct = () => {
                     ))}
                   </select>
                 </div>
-                {errors.weight && <div style={styles.errorMsg}>{errors.weight}</div>}
+                {errors.weight && (
+                  <div style={styles.errorMsg}>{errors.weight}</div>
+                )}
               </div>
             </div>
 
@@ -712,23 +779,29 @@ const GreenMartAddProduct = () => {
                   placeholder="https://example.com/gambar-produk.jpg"
                   style={{
                     ...styles.input,
-                    ...(errors.imageUrl ? styles.inputError : {})
+                    ...(errors.imageUrl ? styles.inputError : {}),
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#22C55E'}
-                  onBlur={(e) => e.target.style.borderColor = errors.imageUrl ? '#EF4444' : '#D1D5DB'}
+                  onFocus={(e) => (e.target.style.borderColor = "#22C55E")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = errors.imageUrl
+                      ? "#EF4444"
+                      : "#D1D5DB")
+                  }
                 />
-                {errors.imageUrl && <div style={styles.errorMsg}>{errors.imageUrl}</div>}
+                {errors.imageUrl && (
+                  <div style={styles.errorMsg}>{errors.imageUrl}</div>
+                )}
               </div>
 
               <div style={styles.imagePreview}>
                 {productData.imageUrl && isValidUrl(productData.imageUrl) ? (
-                  <img 
-                    src={productData.imageUrl} 
+                  <img
+                    src={productData.imageUrl}
                     alt="Preview"
                     style={styles.previewImg}
                     onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
+                      e.target.style.display = "none";
+                      e.target.nextSibling.style.display = "flex";
                     }}
                   />
                 ) : (

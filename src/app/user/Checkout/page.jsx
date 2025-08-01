@@ -93,7 +93,7 @@ const GreenMartCheckout = () => {
     sessionStorage.setItem('orderData', JSON.stringify(orderSummary));
     
     // Redirect to OrderDetail page
-    window.location.href = '/OrderDetail';
+    window.location.href = '/user/OrderDetail';
   };
 
   const getProvinceName = (provinceCode) => {
@@ -635,7 +635,7 @@ const GreenMartCheckout = () => {
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#16A34A'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#22C55E'}
             >
-              Tempatkan Pesanan
+              Buat Pesanan
             </button>
           </div>
         </div>
